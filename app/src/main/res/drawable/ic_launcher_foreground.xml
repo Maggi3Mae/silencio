@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Ícono provisional: tres barras de volumen que van bajando, en blanco. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M36,38h36v8h-36z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M36,50h24v8h-24z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M36,62h12v8h-12z" />
+</vector>
