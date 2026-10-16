@@ -13,6 +13,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -34,17 +35,25 @@ import co.silencio.app.ui.componentes.Marca
 import co.silencio.app.ui.componentes.Segmentado
 import co.silencio.app.ui.theme.Colores
 import co.silencio.app.ui.theme.Tipos
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.Locale
+
+private val ES_CO = Locale.forLanguageTag("es-CO")
+private val FORMATO_FECHA = DateTimeFormatter.ofPattern("EEE d MMM", ES_CO) // "vie 16 oct"
+private val FORMATO_HORA = DateTimeFormatter.ofPattern("H:mm", ES_CO)
 
 @Composable
 fun RegistrarPantalla(alVolver: () -> Unit, alGuardar: () -> Unit) {
-    // Valores de ejemplo; en la entrega 2 se guardan de verdad.
-    var empresa by rememberSaveable { mutableStateOf("Cobranzas XYZ") }
-    var origen by rememberSaveable { mutableStateOf("601 555 0142") }
+    // Fecha y hora arrancan con el momento actual; el resto vacío. Se guardan de verdad en la entrega 2.
+    val ahora = remember { LocalDateTime.now() }
+    var empresa by rememberSaveable { mutableStateOf("") }
+    var origen by rememberSaveable { mutableStateOf("") }
     var canal by rememberSaveable { mutableStateOf("Llamada") }
     var tipo by rememberSaveable { mutableStateOf("Cobranza") }
-    var fecha by rememberSaveable { mutableStateOf("dom 12 oct") }
-    var hora by rememberSaveable { mutableStateOf("9:14") }
-    var autorizacion by rememberSaveable { mutableStateOf("No") }
+    var fecha by rememberSaveable { mutableStateOf(ahora.format(FORMATO_FECHA).replace(".", "")) }
+    var hora by rememberSaveable { mutableStateOf(ahora.format(FORMATO_HORA)) }
+    var autorizacion by rememberSaveable { mutableStateOf("No sé") }
 
     Column(Modifier.fillMaxSize()) {
         Column(
@@ -67,8 +76,12 @@ fun RegistrarPantalla(alVolver: () -> Unit, alGuardar: () -> Unit) {
             Espacio(22.dp)
 
             Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                Campo("01/Empresa", empresa, { empresa = it })
-                Campo("02/Número o correo", origen, { origen = it }, estilo = Tipos.Dato.copy(fontSize = 15.sp))
+                Campo("01/Empresa", empresa, { empresa = it }, guia = "Nombre de la empresa")
+                Campo(
+                    "02/Número o correo", origen, { origen = it },
+                    guia = "Número o correo de origen",
+                    estilo = Tipos.Dato.copy(fontSize = 15.sp),
+                )
 
                 Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
                     EtiquetaSeccion("03/Canal")

@@ -5,6 +5,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.animation.AnimatedContentTransitionScope.SlideDirection
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,6 +22,8 @@ import co.silencio.app.ui.pantallas.InicioPantalla
 import co.silencio.app.ui.pantallas.RegistrarPantalla
 import co.silencio.app.ui.theme.Colores
 import co.silencio.app.ui.theme.TemaSilencio
+
+private const val DURACION = 300 // milisegundos
 
 private object Rutas {
     const val INICIO = "inicio"
@@ -47,7 +51,15 @@ class MainActivity : ComponentActivity() {
                         .background(Colores.Fondo)
                         .safeDrawingPadding(),
                 ) {
-                    NavHost(navController = nav, startDestination = Rutas.INICIO) {
+                    // Slide horizontal: lo nuevo entra por la derecha; al volver, todo se mueve al revés.
+                    NavHost(
+                        navController = nav,
+                        startDestination = Rutas.INICIO,
+                        enterTransition = { slideIntoContainer(SlideDirection.Start, tween(DURACION)) },
+                        exitTransition = { slideOutOfContainer(SlideDirection.Start, tween(DURACION)) },
+                        popEnterTransition = { slideIntoContainer(SlideDirection.End, tween(DURACION)) },
+                        popExitTransition = { slideOutOfContainer(SlideDirection.End, tween(DURACION)) },
+                    ) {
                         composable(Rutas.INICIO) {
                             InicioPantalla(
                                 alRegistrar = { nav.navigate(Rutas.REGISTRAR) },

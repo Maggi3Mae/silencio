@@ -1,33 +1,24 @@
-@file:OptIn(ExperimentalTextApi::class)
-
 package co.silencio.app.ui.theme
 
-import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontVariation
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import co.silencio.app.R
 
-// Ambas fuentes son variables (un solo archivo con todos los pesos) y tienen licencia OFL.
-private fun pesoVariable(recurso: Int, peso: Int) = Font(
-    resId = recurso,
-    weight = FontWeight(peso),
-    variationSettings = FontVariation.Settings(FontVariation.weight(peso)),
-)
-
+// Un archivo fijo por peso (generados a partir de las fuentes variables originales, licencia OFL).
+// Así Android aplica siempre el peso correcto.
 val SpaceGrotesk = FontFamily(
-    pesoVariable(R.font.space_grotesk, 400),
-    pesoVariable(R.font.space_grotesk, 500),
-    pesoVariable(R.font.space_grotesk, 700),
+    Font(R.font.space_grotesk_regular, FontWeight.Normal),
+    Font(R.font.space_grotesk_medium, FontWeight.Medium),
+    Font(R.font.space_grotesk_bold, FontWeight.Bold),
 )
 
 val JetBrainsMono = FontFamily(
-    pesoVariable(R.font.jetbrains_mono, 400),
-    pesoVariable(R.font.jetbrains_mono, 500),
+    Font(R.font.jetbrains_mono_regular, FontWeight.Normal),
+    Font(R.font.jetbrains_mono_medium, FontWeight.Medium),
 )
 
 object Tipos {

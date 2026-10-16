@@ -15,6 +15,7 @@ object Colores {
     val Fondo = Color(0xFFFFFFFF)
     val Texto = Color(0xFF0B1F1F)
     val Secundario = Color(0xFF4D5E5E)
+    val Guia = Color(0xFF687474) // texto guía de campos vacíos, ~4.8:1
     val Contorno = Color(0xFF8A8A86)
     val Divisor = Color(0xFFE3E8E8)
     val Accion = Color(0xFF0E7C7B)

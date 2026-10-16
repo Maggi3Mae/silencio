@@ -169,13 +169,14 @@ fun Segmentado(
     }
 }
 
-/** Campo de texto con etiqueta numerada encima. */
+/** Campo de texto con etiqueta numerada encima y texto guía en gris cuando está vacío. */
 @Composable
 fun Campo(
     etiqueta: String,
     valor: String,
     onCambio: (String) -> Unit,
     modifier: Modifier = Modifier,
+    guia: String = "",
     estilo: TextStyle = Tipos.Item.copy(fontWeight = FontWeight.Normal, fontSize = Tipos.Cuerpo.fontSize),
 ) {
     Column(modifier, verticalArrangement = Arrangement.spacedBy(6.dp)) {
@@ -197,7 +198,12 @@ fun Campo(
                         .border(1.dp, Colores.Contorno)
                         .padding(horizontal = 14.dp),
                     contentAlignment = Alignment.CenterStart,
-                ) { campo() }
+                ) {
+                    if (valor.isEmpty() && guia.isNotEmpty()) {
+                        Text(guia, style = estilo.copy(color = Colores.Guia), maxLines = 1)
+                    }
+                    campo()
+                }
             },
         )
     }
